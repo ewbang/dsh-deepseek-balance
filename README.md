@@ -8,6 +8,10 @@ DeepSeek Harness 插件：在 Web GUI 的**侧边栏底部**实时显示 DeepSee
 - 默认每 60 秒自动刷新（页面隐藏时暂停，回到前台立即刷新）
 - 余额低于阈值（默认 ¥20）时状态点变琥珀色警示，账户不可用时变红
 
+## 效果预览
+
+![dsh-deepseek-balance 预览](Preview_image.png)
+
 ## 安装
 
 从 GitHub 安装（推荐）：
