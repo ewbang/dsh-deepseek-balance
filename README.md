@@ -10,10 +10,20 @@ DeepSeek Harness 插件：在 Web GUI 的**侧边栏底部**实时显示 DeepSee
 
 ## 安装
 
+从 GitHub 安装（推荐）：
+
 ```powershell
-# 在插件包目录的父目录执行（把路径换成你的实际位置）
-dsh plugin --profile web add link:C:\Users\admin\Desktop\testCode\dsh-deepseek-balance
+dsh plugin --profile web add github:ewbang/dsh-deepseek-balance
 ```
+
+等价写法（完整 git URL，可指定分支 / 标签 / 提交）：
+
+```powershell
+dsh plugin --profile web add git+https://github.com/ewbang/dsh-deepseek-balance.git
+dsh plugin --profile web add github:ewbang/dsh-deepseek-balance#main
+```
+
+> 前提：本机已安装 [pnpm](https://pnpm.io/installation) 且 `git` 在 PATH 中（`dsh plugin` 内部通过 pnpm 安装 git 依赖）。
 
 安装后**重启 dsh web 服务**（`Ctrl+C` 停掉，再 `dsh web` 启动），刷新浏览器页面即可在侧边栏底部看到余额。
 
