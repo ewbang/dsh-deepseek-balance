@@ -4,7 +4,7 @@ DeepSeek Harness 插件：在 Web GUI 的**侧边栏底部**实时显示 DeepSee
 
 - 官方接口：`GET https://api.deepseek.com/user/balance`
 - API Key 通过 DSH 自身的凭据服务读取（`设置 → 模型` 里配置的 `DEEPSEEK_API_KEY`，或启动环境变量），**密钥只留在主机侧，浏览器拿不到**
-- 侧边栏常驻显示总额（¥0.29 这样的紧凑形式），点击弹出详情：总额 / 赠送 / 充值、可用状态、更新时间，支持手动刷新
+- 侧边栏常驻显示总额，点击弹出详情：总额 / 赠送 / 充值、可用状态、更新时间，支持手动刷新
 - 默认每 60 秒自动刷新（页面隐藏时暂停，回到前台立即刷新）
 - 余额低于阈值（默认 ¥20）时状态点变琥珀色警示，账户不可用时变红
 
@@ -18,13 +18,6 @@ DeepSeek Harness 插件：在 Web GUI 的**侧边栏底部**实时显示 DeepSee
 
 ```powershell
 dsh plugin --profile web add github:ewbang/dsh-deepseek-balance
-```
-
-等价写法（完整 git URL，可指定分支 / 标签 / 提交）：
-
-```powershell
-dsh plugin --profile web add git+https://github.com/ewbang/dsh-deepseek-balance.git
-dsh plugin --profile web add github:ewbang/dsh-deepseek-balance#main
 ```
 
 > 前提：本机已安装 [pnpm](https://pnpm.io/installation) 且 `git` 在 PATH 中（`dsh plugin` 内部通过 pnpm 安装 git 依赖）。
