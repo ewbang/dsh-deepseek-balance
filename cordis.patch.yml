@@ -1,0 +1,31 @@
+# dsh-deepseek-balance bundle patch.
+#
+# One dual-face row: the loader mounts the package's node half (lib/index.js)
+# on the host — registering the same-origin balance proxy route on the
+# webserver — while dsh-client-modules discovers the same package's
+# `exports["./client"]` bundle and serves it to the browser as a client
+# plugin (the sidebar footer widget).
+#
+# Every key below is user-overridable from the profile's own
+# cordis.patch.yml by restating this row id with a full `config` block.
+
+- insert:
+    - id: dsh-balance
+      name: dsh-deepseek-balance
+      inject: [webServer]
+      config:
+        # Credential reference resolved through the DSH credentials service
+        # (the web Models page writes it; falls back to the launching env).
+        apiKeyEnv: DEEPSEEK_API_KEY
+        # DeepSeek OpenAPI base URL; the balance endpoint is /user/balance.
+        baseURL: https://api.deepseek.com
+        # Same-origin route served by the webserver (exact route).
+        routePath: /api/dsh-balance
+        # Short in-host cache so several browser tabs do not hammer the API.
+        cacheMs: 30000
+        # Polling interval the widget adopts (returned in every response).
+        refreshMs: 60000
+        # Total balance below this amount tints the widget amber (warning).
+        lowThreshold: 20
+        # Upstream request timeout.
+        requestTimeoutMs: 15000

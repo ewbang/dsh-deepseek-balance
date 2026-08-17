@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Local dev temp (CDP probes)
+.chrome-tmp/
+gui-shot.png
