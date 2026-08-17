@@ -33,7 +33,7 @@ dsh plugin --profile web add github:ewbang/dsh-deepseek-balance
 | `apiKeyEnv` | `DEEPSEEK_API_KEY` | 凭据引用名（对应 `.credentials.yaml` / 环境变量） |
 | `baseURL` | `https://api.deepseek.com` | DeepSeek OpenAPI 地址 |
 | `routePath` | `/api/dsh-balance` | 主机侧同源代理路由 |
-| `cacheMs` | `30000` | 主机侧缓存时长（避免多标签页频繁打 API） |
+| `cacheMs` | `30000` | 主机侧缓存时长（避免多标签页频繁打 API）；**手动刷新始终绕过该缓存** |
 | `refreshMs` | `60000` | 前端轮询间隔 |
 | `lowThreshold` | `20` | 余额低于该值显示警示（按主币种） |
 | `requestTimeoutMs` | `15000` | 上游请求超时 |
@@ -58,6 +58,7 @@ dsh plugin --profile web add github:ewbang/dsh-deepseek-balance
 - **主机侧**（`lib/index.js`）：loader 把它当作普通插件行挂载，向 `webServer` 注册一条 exact 路由
   `/api/dsh-balance`。每次请求用 `ctx.credentials.resolve("DEEPSEEK_API_KEY")` 取密钥，
   代理调用 `/user/balance`，返回一个扁平化 JSON 信封；路由带 Host 校验（防 DNS rebinding）。
+  带 `?fresh=1` 的请求（手动刷新按钮）跳过主机侧快照缓存，始终请求上游；自动轮询命中缓存。
 - **浏览器侧**（`lib/client.js`）：`dsh-client-modules` 扫描到该包声明了
   `dsh.client.platform: "web"` 与 `exports["./client"]`，把它编入 `window.__DSH_BOOT__`
   模块图并托管 `/plugins/dsh-deepseek-balance/client.js`。侧边栏小组件通过

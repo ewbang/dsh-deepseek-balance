@@ -1,7 +1,7 @@
 {
   "name": "dsh-deepseek-balance",
   "description": "DeepSeek Harness 插件：在 Web GUI 侧边栏实时显示 DeepSeek 账户余额（官方 /user/balance API，凭据走 DSH credentials 服务）。",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

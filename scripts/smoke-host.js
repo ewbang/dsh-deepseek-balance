@@ -49,8 +49,8 @@ if (!registered) throw new Error("route was not registered");
 console.log(`route registered: ${registered.kind} ${registered.path}`);
 
 // --- fake req/res ----------------------------------------------------------
-function makeReq(method, host) {
-  return { method, headers: { host } };
+function makeReq(method, host, url = "/api/dsh-balance") {
+  return { method, headers: { host }, url };
 }
 function makeRes() {
   const chunks = [];
@@ -97,6 +97,15 @@ function makeRes() {
   await registered.handler(makeReq("GET", "127.0.0.1:3080"), res);
   const parsed = JSON.parse(res.body);
   console.log(`[3] cache -> ok=${parsed.ok} resolveCallsDelta=${resolveCalls - before} ${resolveCalls === before ? "PASS (no re-resolve)" : "note (re-resolved)"}`);
+}
+
+// 3b) manual refresh (?fresh=1) bypasses the cache and re-resolves the key
+{
+  const res = makeRes();
+  const before = resolveCalls;
+  await registered.handler(makeReq("GET", "127.0.0.1:3080", "/api/dsh-balance?fresh=1"), res);
+  const parsed = JSON.parse(res.body);
+  console.log(`[3b] fresh -> ok=${parsed.ok} resolveCallsDelta=${resolveCalls - before} ${resolveCalls > before ? "PASS (cache bypassed)" : "FAIL (cache not bypassed)"}`);
 }
 
 // 4) method guard
